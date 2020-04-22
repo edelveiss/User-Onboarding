@@ -18,13 +18,13 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 import InputLabel from "@material-ui/core/InputLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
+//import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 //import NativeSelect from "@material-ui/core/NativeSelect";
 import MenuItem from "@material-ui/core/MenuItem";
-import NativeSelect from "@material-ui/core/NativeSelect";
-import InputBase from "@material-ui/core/InputBase";
+// import NativeSelect from "@material-ui/core/NativeSelect";
+// import InputBase from "@material-ui/core/InputBase";
 
 const formSchema = yup.object().shape({
   name: yup.string().required("Name is a required field"),
@@ -94,6 +94,7 @@ function UserForm(props) {
       .post("https://reqres.in/api/users", formState)
       .then((res) => {
         setPost(res.data);
+        props.addUser(res.data);
         console.log("success", post);
 
         setFormState({
