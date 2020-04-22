@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 import axios from "axios";
+import "../App.css";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -14,18 +15,29 @@ import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+
+import InputLabel from "@material-ui/core/InputLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+//import NativeSelect from "@material-ui/core/NativeSelect";
+import MenuItem from "@material-ui/core/MenuItem";
+import NativeSelect from "@material-ui/core/NativeSelect";
+import InputBase from "@material-ui/core/InputBase";
 
 const formSchema = yup.object().shape({
   name: yup.string().required("Name is a required field"),
   email: yup.string().email().required("Must include an email"),
   terms: yup.boolean().oneOf([true], "please agree to terms of use"),
-  password: yup.string().required("must include a password"),
-  //positions: yup.string()
+  password: yup.string().min(6, "Password must be at least 6 characters"),
+  role: yup.string(),
+  location: yup.string().min(5, "Needs to be a minimum of 5 characters."),
 });
 
 function UserForm(props) {
   const classes = useStyles();
+  // const [position, setPosition] = useState("");
   // new state to set our post request
   const [post, setPost] = useState([]);
 
@@ -34,8 +46,9 @@ function UserForm(props) {
     name: "",
     email: "",
     terms: "",
-    //positions: "",
+    role: "",
     password: "",
+    location: "",
   });
 
   // state for our errors
@@ -43,8 +56,9 @@ function UserForm(props) {
     name: "",
     email: "",
     terms: "",
-    //positions: "",
+    role: "",
     password: "",
+    location: "",
   });
 
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -87,7 +101,8 @@ function UserForm(props) {
           email: "",
           terms: "",
           password: "",
-          //positions: ""
+          role: "",
+          location: "",
         });
       })
       .catch((err) => {
@@ -116,9 +131,10 @@ function UserForm(props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            New User Sign Up
+            Sign Up
           </Typography>
           <form className={classes.form} noValidate onSubmit={formSubmit}>
+            {/*-------------------Name----------------------- */}
             <TextField
               variant="outlined"
               margin="normal"
@@ -137,6 +153,60 @@ function UserForm(props) {
                 {errors.name}
               </p>
             ) : null}
+            {/*8888888888888888888888888888888888888 */}
+            {/*-------------------Role----------------------- */}
+            <FormControl
+              variant="outlined"
+              className={classes.formControl}
+              style={{ width: " 100%" }}
+            >
+              <InputLabel id="demo-simple-select-outlined-label">
+                Role
+              </InputLabel>
+              <Select
+                onChange={inputChange}
+                style={{ width: " 100%" }}
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={formState.role}
+                // onChange={handleChange}
+                label="Role"
+                name="role"
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={"Project Manager"}>Project Manager</MenuItem>
+                <MenuItem value={"Project Architect"}>
+                  Project Architect
+                </MenuItem>
+                <MenuItem value={"UI/UX Designer"}>UI/UX Designer</MenuItem>
+                <MenuItem value={"Web Developer"}>Web Developer</MenuItem>
+                <MenuItem value={"QA Tester"}>QA Tester</MenuItem>
+              </Select>
+            </FormControl>
+            {/**   </FormControl>*/}
+            {/*8888888888888888888888888888888888888 */}
+            {/*-------------------Location----------------------- */}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="location"
+              label="Location"
+              name="location"
+              autoComplete="location"
+              autoFocus
+              value={formState.location}
+              onChange={inputChange}
+            />
+            {errors.location.length > 0 ? (
+              <p className="error" style={{ color: " red" }}>
+                {errors.location}
+              </p>
+            ) : null}
+            {/*-------------------Email----------------------- */}
             <TextField
               variant="outlined"
               margin="normal"
@@ -146,13 +216,13 @@ function UserForm(props) {
               label="Email Address"
               name="email"
               autoComplete="email"
-              autoFocus
               value={formState.email}
               onChange={inputChange}
             />
             {errors.email.length > 0 ? (
               <p className="error"> {errors.email}</p>
             ) : null}
+            {/*-------------------Password----------------------- */}
             <TextField
               variant="outlined"
               margin="normal"
@@ -169,6 +239,7 @@ function UserForm(props) {
             {errors.password.length > 0 ? (
               <p className="error">{errors.password}</p>
             ) : null}
+            {/*-------------------CheckBox----------------------- */}
             <FormControlLabel
               control={
                 <Checkbox
@@ -182,7 +253,7 @@ function UserForm(props) {
               }
               label="Terms and Conditions"
             />
-            {console.log("formState.terms", formState.terms)}
+            {/*console.log("formState.terms", formState.terms)*/}
             <pre>{JSON.stringify(post, null, 2)}</pre>
             <Button
               type="submit"
@@ -194,6 +265,7 @@ function UserForm(props) {
             >
               Submit
             </Button>
+            {/* 
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -206,6 +278,7 @@ function UserForm(props) {
                 </Link>
               </Grid>
             </Grid>
+*/}
             <Box mt={5}>
               <Copyright />
             </Box>
@@ -262,3 +335,38 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+
+// const BootstrapInput = withStyles((theme) => ({
+//   root: {
+//     "label + &": {
+//       marginTop: theme.spacing(3),
+//     },
+//   },
+//   input: {
+//     borderRadius: 4,
+//     position: "relative",
+//     backgroundColor: theme.palette.background.paper,
+//     border: "1px solid #ced4da",
+//     fontSize: 16,
+//     padding: "10px 26px 10px 12px",
+//     transition: theme.transitions.create(["border-color", "box-shadow"]),
+//     // Use the system font instead of the default Roboto font.
+//     fontFamily: [
+//       "-apple-system",
+//       "BlinkMacSystemFont",
+//       '"Segoe UI"',
+//       "Roboto",
+//       '"Helvetica Neue"',
+//       "Arial",
+//       "sans-serif",
+//       '"Apple Color Emoji"',
+//       '"Segoe UI Emoji"',
+//       '"Segoe UI Symbol"',
+//     ].join(","),
+//     "&:focus": {
+//       borderRadius: 4,
+//       borderColor: "#80bdff",
+//       boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+//     },
+//   },
+// }))(InputBase);
