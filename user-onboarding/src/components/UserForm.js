@@ -18,13 +18,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 import InputLabel from "@material-ui/core/InputLabel";
-//import FormHelperText from "@material-ui/core/FormHelperText";
+
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-//import NativeSelect from "@material-ui/core/NativeSelect";
+
 import MenuItem from "@material-ui/core/MenuItem";
-// import NativeSelect from "@material-ui/core/NativeSelect";
-// import InputBase from "@material-ui/core/InputBase";
 
 const formSchema = yup.object().shape({
   name: yup.string().required("Name is a required field"),
@@ -144,6 +142,7 @@ function UserForm(props) {
               id="name"
               label="Full Name"
               name="name"
+              // data-cy="name"
               autoComplete="name"
               autoFocus
               value={formState.name}
@@ -156,6 +155,27 @@ function UserForm(props) {
             ) : null}
             {/*8888888888888888888888888888888888888 */}
             {/*-------------------Role----------------------- */}
+
+            <label htmlFor="role" style={{ width: "100%" }}>
+              Select your role:
+              <select
+                id="role"
+                name="role"
+                onChange={inputChange}
+                style={{ width: "100%", height: "3.4rem", marginLeft: "0" }}
+              >
+                <option value="None">None</option>
+                <option value="Project Architect">Project Architect</option>
+                <option value="Project Manager">Project Manager</option>
+
+                <option value="UI/UX Designer">UI/UX Designer</option>
+                <option value="Web Developer">Web Developer</option>
+                <option value="QA Tester">QA Tester</option>
+              </select>
+            </label>
+
+            {/*
+
             <FormControl
               variant="outlined"
               className={classes.formControl}
@@ -186,6 +206,7 @@ function UserForm(props) {
                 <MenuItem value={"QA Tester"}>QA Tester</MenuItem>
               </Select>
             </FormControl>
+          */}
             {/**   </FormControl>*/}
             {/*8888888888888888888888888888888888888 */}
             {/*-------------------Location----------------------- */}
@@ -197,6 +218,7 @@ function UserForm(props) {
               id="location"
               label="Location"
               name="location"
+              // data-cy="location"
               autoComplete="location"
               autoFocus
               value={formState.location}
@@ -216,6 +238,7 @@ function UserForm(props) {
               id="email"
               label="Email Address"
               name="email"
+              // data-cy="email"
               autoComplete="email"
               value={formState.email}
               onChange={inputChange}
@@ -233,6 +256,7 @@ function UserForm(props) {
               label="Password"
               type="password"
               id="password"
+              // data-cy="password"
               autoComplete="current-password"
               value={formState.password}
               onChange={inputChange}
@@ -241,6 +265,17 @@ function UserForm(props) {
               <p className="error">{errors.password}</p>
             ) : null}
             {/*-------------------CheckBox----------------------- */}
+            <label htmlFor="terms" className="terms">
+              <input
+                type="checkbox"
+                name="terms"
+                checked={formState.terms}
+                onChange={inputChange}
+                style={{ width: "1.5rem", height: "1.5rem" }}
+              />
+              Terms and Conditions
+            </label>
+            {/*
             <FormControlLabel
               control={
                 <Checkbox
@@ -248,12 +283,14 @@ function UserForm(props) {
                   //value="terms"
                   color="primary"
                   name="terms"
+                  data-cy="terms"
                   checked={formState.terms}
                   onChange={inputChange}
                 />
               }
               label="Terms and Conditions"
             />
+*/}
             {/*console.log("formState.terms", formState.terms)*/}
             <pre>{JSON.stringify(post, null, 2)}</pre>
             <Button
