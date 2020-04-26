@@ -149,7 +149,7 @@ function UserForm(props) {
               onChange={inputChange}
             />
             {errors.name.length > 0 ? (
-              <p className="error" style={{ color: " red" }}>
+              <p className="error" id="nameError" style={{ color: " red" }}>
                 {errors.name}
               </p>
             ) : null}
@@ -173,7 +173,7 @@ function UserForm(props) {
                 <option value="QA Tester">QA Tester</option>
               </select>
             </label>
-
+            {/****************************************************************************** */}
             {/*
 
             <FormControl
@@ -225,7 +225,7 @@ function UserForm(props) {
               onChange={inputChange}
             />
             {errors.location.length > 0 ? (
-              <p className="error" style={{ color: " red" }}>
+              <p className="error" id="locationError" style={{ color: " red" }}>
                 {errors.location}
               </p>
             ) : null}
@@ -332,7 +332,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" href="/">
         TatianaZ Website
       </Link>{" "}
       {new Date().getFullYear()}
