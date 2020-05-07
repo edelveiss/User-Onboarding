@@ -80,7 +80,7 @@ function App() {
                 color="inherit"
                 style={{ color: "white", fontSize: "1.1rem" }}
               >
-                Sing Up
+                Sign Up
               </Button>
             </Link>
           </Toolbar>
